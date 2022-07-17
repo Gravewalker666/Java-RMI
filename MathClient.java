@@ -7,13 +7,14 @@ import java.rmi.RemoteException;
  
 public class MathClient {
     public static void main(String[] args){
-        //       if (System.getSecurityManager() == null) {
+        //      if (System.getSecurityManager() == null) {
         //        System.setSecurityManager (new RMISecurityManager());
         //      }
         System.setProperty("java.security.policy", "file:allowall.policy");
         MathService service;
         try {
             service = (MathService) Naming.lookup("//localhost/CalculatorService");
+            System.out.println  ("Client count : " + service.increaseClientCount());
             System.out.println  ("Add : " + service.add(2,2));
             System.out.println  ("Subtract : " + service.subtract(5,2));
             System.out.println  ("Multiply : " + service.multiply(2,6));

@@ -1,23 +1,19 @@
-import java.net.MalformedURLException;
 import java.rmi.AlreadyBoundException;
-import java.rmi.Naming;
-import java.lang.SecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.rmi.registry.Registry;
-import java.rmi.registry.LocateRegistry;
- 
+
 public class MathServer extends UnicastRemoteObject implements MathService {
 
-	// TODO: Add a private variable to keep the client count 
+    private static volatile int clientCount = 0;
 
+	// TODO: Add a private variable to keep the client count
     public MathServer() throws RemoteException{
         super();
     }
  
-    // TODO: add a method to increment the client count. Make it thread safe 
-
+    // TODO: add a method to increment the client count. Make it thread safe
     public int add(int a, int b) throws RemoteException {
         System.out.println("Adding " + a + " and " + b + " in the Server");
         return a+b;
@@ -45,13 +41,16 @@ public class MathServer extends UnicastRemoteObject implements MathService {
     public int divide(int a, int b) throws RemoteException {
         System.out.println("Dividing " + a + " and " + b + " in the Server");
         //  TODO: Uncomment this to observe the clients get blocked
-        //  for (double i=0; i<10000000000000000.0; i++) {
-        //      System.out.println("I'm doing something that takes a long time.");
-        //  }
-        return a/b; //check for division with zero here!
+        for (double i = 0; i < 10000000000000000.0; i++) {
+            System.out.println("I'm doing something that takes a long time.");
+        }
+        return a/b; // check for division with zero here!
     }
 
- 
+    public synchronized int increaseClientCount() throws RemoteException {
+        return ++clientCount;
+    }
+
     public static void main(String[] args){
         // set the policy file as the system security policy
         System.setProperty("java.security.policy", "file:allowall.policy");

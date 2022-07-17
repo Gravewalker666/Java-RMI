@@ -6,4 +6,5 @@ public interface MathService extends Remote {
     public int subtract(int a, int b) throws RemoteException;
     public int multiply(int a, int b) throws RemoteException;
     public int divide(int a, int b) throws RemoteException;
+    public int increaseClientCount() throws RemoteException;
 }
