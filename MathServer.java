@@ -6,14 +6,12 @@ import java.rmi.registry.Registry;
 
 public class MathServer extends UnicastRemoteObject implements MathService {
 
-    private static volatile int clientCount = 0;
+    private volatile int clientCount = 0;
 
-	// TODO: Add a private variable to keep the client count
-    public MathServer() throws RemoteException{
+    public MathServer() throws RemoteException {
         super();
     }
- 
-    // TODO: add a method to increment the client count. Make it thread safe
+
     public int add(int a, int b) throws RemoteException {
         System.out.println("Adding " + a + " and " + b + " in the Server");
         return a+b;
